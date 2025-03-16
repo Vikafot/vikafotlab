@@ -3,4 +3,73 @@ body {
     color: maroon;
     font-family: Arial;
     margin: 0px;
+    
 }
+
+    .odin {
+        font-size: x-large;
+        color: red;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .dva {
+        font-size: x-large;
+        color: blue;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .tri {
+        font-size: x-large;
+        color: blueviolet;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .chetyre {
+        font-size: x-large;
+        color: crimson;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .pyat {
+        font-size: x-large;
+        color: brown;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .shest {
+        font-size: x-large;  
+        color: burlywood;
+        margin-left: 10px;
+        margin-right: 10px;
+    } 
+
+    .sem {
+        font-size: x-large;
+        color: chocolate;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .vosem {
+        font-size: x-large;
+        color: green;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .glava {
+        text-align: center;
+        text-shadow: 6px 7px 6px rgba(183, 255, 0, 1)
+    }
+
+    .shadow {
+        text-align: center;
+        text-shadow: 6px 7px 6px rgba(183, 255, 0, 1)
+    }
+
+ 
