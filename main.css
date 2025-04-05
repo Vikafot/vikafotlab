@@ -162,7 +162,7 @@ main {
 
 
 div {
-    border: 1px dotted #067e32;
+    border: 1px line #067e32;
     margin: 15px;
     width: 300px;
     height: 70px;
