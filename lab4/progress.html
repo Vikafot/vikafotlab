@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Облако тегов</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+</head>
+<header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt;">
+  НГТУ, ФБ, Лабораторная работа 4  
+</header> 
+  <style>
+    
+    footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+    body {
+      margin: 0;
+      background-color: #aeeaf8;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      border: 7px outset rgb(32, 196, 89);
+      background-color: #bbe4b8;
+      padding: 30px;
+      text-align: center;
+      min-width: 300px;
+      border-radius: 20px;
+      box-shadow: 10px 5px 5px rgba(26, 75, 9, 0.592);
+    }
+
+    h2 {
+      color: rgb(7, 57, 39);
+      font-weight: bold;
+    }
+
+    .progress-bar-container {
+      width: 300px;
+      height: 20px;
+      border: 1px solid rgb(24, 145, 115);
+      margin: 10px auto;
+      background-color: white;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background-color: rgb(10, 193, 92);
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    .hold-button {
+      padding: 10px 20px;
+      background-color: rgb(11, 53, 19);
+      color: rgb(236, 243, 245);
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .hold-button:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    }
+
+    .hold-button:active {
+      box-shadow: none;
+    }
+  </style>
+
+  <div class="content">
+    <div class="container">
+      <h2>Степень прогресса</h2>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <button class="hold-button" id="holdButton">Нажмите и удерживайте</button>
+    </div>
+  </div>
+
+  <footer>
+    &copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+</footer>
+
+  <script>
+    const button = document.getElementById('holdButton');
+    const progressBar = document.getElementById('progressBar');
+    let interval;
+    let progress = 0;
+
+    function startProgress() {
+      progress = 0;
+      progressBar.style.width = '0%';
+
+      interval = setInterval(() => {
+        progress += 2;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(interval);
+        }
+        progressBar.style.width = progress + '%';
+      }, 100);
+    }
+
+    function stopProgress() {
+      clearInterval(interval);
+    }
+
+    button.addEventListener('mousedown', startProgress);
+    button.addEventListener('mouseup', stopProgress);
+    button.addEventListener('mouseleave', stopProgress);
+
+    button.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      startProgress();
+    });
+
+    button.addEventListener('touchend', stopProgress);
+  </script>
+</body>
+</html>

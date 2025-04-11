@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Комикс</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+    <style>
+        .comic-container {
+            position: relative;
+            width: 600px;
+            margin: 20px auto;
+        }
+        
+        .comic-image {
+            width: 100%;
+            display: block;
+        }
+        
+        .speech-bubble {
+            position: absolute;
+            background-color: rgb(172, 158, 128);
+            border: 2px solid #060606;
+            border-radius: 50%;
+            padding: 15px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            box-shadow: 5px 5px 5px black;
+            width: 100px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .comic-container:hover .speech-bubble {
+            opacity: 1;
+        }
+        
+        .bubble1 {
+            left: 200px;
+            top: 20px;
+            height: 40px;
+            width: 70px;
+            transition-delay: 0.1s;
+        }
+        
+        .bubble2 {
+            left: 280px;
+            top: 30px;
+            height: 60px;
+            width: 100px;
+            transition-delay: 0.3s;
+            box-shadow: #060606;
+        }
+        
+        .bubble3 {
+            left: 380px;
+            top: 50px;
+            height: 80px;
+            width: 120px;
+            transition-delay: 0.5s;
+            box-shadow: #060606;
+        }
+        
+        .bubble4 {
+            left: 400px;
+            top: 140px;
+            width: 200px;
+            height: 100px;
+            transition-delay: 0.7s;
+            box-shadow: black;
+        }
+    </style>
+</head>
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt;">
+        НГТУ, ФБ, Лабораторная работа 4  
+    </header> 
+<body>
+    <div class="comic-container">
+        <img src="https://cs.pikabu.ru/post_img/big/2013/04/22/9/1366636684_743242169.JPG" alt="Герой комикса" class="comic-image">
+        
+        <div class="speech-bubble bubble1"></div>
+        <div class="speech-bubble bubble2"></div>
+        <div class="speech-bubble bubble3"></div>
+        <div class="speech-bubble bubble4">
+            Я супергерой!!!
+        </div>
+    </div>
+    <footer>
+        &copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
