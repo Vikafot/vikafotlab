@@ -9,5 +9,130 @@
     <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
     <link rel="icon" href="../favicon-32x32.png">
     <link rel="icon" href="../favicon-16x16.png">
+</head>
+<body>
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt;">
+        НГТУ, ФБ, Лабораторная работа 4  
+    </header>
     <style>
-      
+    
+        footer {
+        position: fixed;
+        bottom: 100;
+        right: 100;
+        left: 100;
+    }
+        body {
+          margin: 100;
+          background-color: #10ac2c;
+          height: 500px;
+          display: flex;
+          flex-direction: column;
+        }
+    
+        .content {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+    
+        .container {
+          border: 7px outset rgb(23, 151, 70);
+          background-color: #e9eaeb;
+          padding: 10px;
+          text-align: center;
+          min-width: 300px;
+          border-radius: 20px;
+          box-shadow: 10px 5px 5px rgba(12, 161, 104, 0.592);
+        }
+    
+        h2 {
+          color: rgb(173, 19, 135);
+          font-weight: bold;
+        }
+    
+        .progress-bar-container {
+          width: 300px;
+          height: 20px;
+          border: 1px solid rgb(131, 36, 186);
+          margin: 10px auto;
+          background-color: white;
+        }
+    
+        .progress-bar {
+          height: 100%;
+          background-color: rgb(255, 0, 247);
+          width: 0%;
+          transition: width 0.1s linear;
+        }
+    
+        .hold-button {
+          padding: 10px 20px;
+          background-color: rgb(54, 7, 113);
+          color: rgb(235, 213, 255);
+          border: none;
+          border-radius: 12px;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+          cursor: pointer;
+          font-size: 16px;
+        }
+    
+        .hold-button:hover {
+          box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+        }
+    
+        .hold-button:active {
+          box-shadow: none;
+        }
+      </style>
+      <div class="content">
+        <div class="container">
+          <h2>Степень прогресса</h2>
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
+          </div>
+          <button class="hold-button" id="holdButton">Нажмите и удерживайте</button>
+        </div>
+      </div>
+    
+      <script>
+        const button = document.getElementById('holdButton');
+        const progressBar = document.getElementById('progressBar');
+        let interval;
+        let progress = 0;
+    
+        function startProgress() {
+          progress = 0;
+          progressBar.style.width = '0%';
+    
+          interval = setInterval(() => {
+            progress += 2;
+            if (progress >= 100) {
+              progress = 100;
+              clearInterval(interval);
+            }
+            progressBar.style.width = progress + '%';
+          }, 100);
+        }
+    
+        function stopProgress() {
+          clearInterval(interval);
+        }
+    
+        button.addEventListener('mousedown', startProgress);
+        button.addEventListener('mouseup', stopProgress);
+        button.addEventListener('mouseleave', stopProgress);
+    
+        button.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          startProgress();
+        });
+    
+        button.addEventListener('touchend', stopProgress);
+      </script>
+    <footer>
+        &copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
