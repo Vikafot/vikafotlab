@@ -10,15 +10,23 @@
     <link rel="icon" href="../favicon-16x16.png">
 </head>
 <body>
-    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt;">
-        НГТУ, ФБ, Лабораторная работа 5  
-    </header> 
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt; cursor: pointer" onclick="showAuthor()"><b>НГТУ, ФБ, Лабораторная работа 5</b>
+    </header>
+
     <script>
         function showSum() {
            let a = 5154;
            let b = 7891;
            let result = a + b;
            alert('Сумма ' + a + ' и ' + b + ' равна ' + result);
+        }
+        function showAuthor() {
+            let author = 'Автор страницы: \nФот Виктория Владимировна';
+            alert(author);
+        }
+        function showWelcome() {
+            let welcomeMessage = "Приветствую вас на моей странице!\n" + "Мой девиз: Учись, пробуй, создавай!";
+            alert(welcomeMessage);
         }
     </script>
     <style>
@@ -39,11 +47,10 @@
 
     <main>
         <div class="message" onclick="showSum()">Сколько будет 5154+7891?</div>
-        <div class="message">Узнать, кто автор страницы</div>
+        <div class="message" onclick="showAuthor()">Узнать, кто автор страницы</div>
     </main>
 
-    <footer>
-        &copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    <footer style= "background-color: black; color: lightgreen; padding: 10px; font-size: 16pt; cursor: pointer" ondblclick="showWelcome()"><b>&copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025</b>
     </footer>
 </body>
 </html>
