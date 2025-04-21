@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 5</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+</head>
+<body>
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt; cursor: pointer" onclick="showAuthor()">НГТУ, ФБ, Лабораторная работа 5
+    </header>
+    <style>
+        
+        #circles-container {
+            position: relative;
+            height: 500px;
+            margin: 20px auto;
+            border: 1px dashed #ccc;
+        }
+        
+        .circle {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.5s ease;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #4682b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        button:hover {
+            background-color: #3683c6;
+        }
+    </style>
+</head>
+<body>
+    
+    <main>
+        <div id="circles-container">
+        </div>
+        
+        <button onclick="resetCircles()">Восстановить круги</button>
+    </main>
+    
+    <script>
+        function showAuthor() {
+            let author = 'Автор страницы: \nФот Виктория Владимировна';
+            alert(author);
+        }
+        function showWelcome() {
+            let welcomeMessage = "Приветствую вас на моей странице!\n" + "Мой девиз: Учись, пробуй, создавай!";
+            alert(welcomeMessage);
+        }
+    
+        function createCircles() {
+            const container = document.getElementById('circles-container');
+            const colors = [
+                '#FF5733', '#33FF57', '#3357FF', '#F3FF33', '#FF33F3',
+                '#33FFF3', '#8A2BE2', '#FF6347', '#7CFC00', '#FFD700'];
+            
+            container.innerHTML = '';
+            
+            for (let i = 1; i <= 10; i++) {
+                const circle = document.createElement('div');
+                circle.className = 'circle';
+                circle.textContent = i;
+                circle.style.backgroundColor = colors[i-1];
+                
+                const maxX = container.clientWidth - 80;
+                const maxY = container.clientHeight - 80;
+                circle.style.left = Math.floor(Math.random() * maxX) + 'px';
+                circle.style.top = Math.floor(Math.random() * maxY) + 'px';
+
+                circle.addEventListener('click', function() {
+                    hideCircle(this);
+                });
+                
+                container.appendChild(circle);
+            }
+        }
+        
+        function hideCircle(circle) {
+            circle.style.width = '0';
+            circle.style.height = '0';
+            circle.style.opacity = '0';
+            circle.style.fontSize = '0';
+        }
+
+        function resetCircles() {
+            const circles = document.querySelectorAll('.circle');
+            circles.forEach(circle => {
+                circle.style.width = '80px';
+                circle.style.height = '80px';
+                circle.style.opacity = '1';
+                circle.style.fontSize = '24px';
+            });
+            
+            if (circles.length === 0) {
+                createCircles();
+            }
+        }
+
+        window.onload = createCircles;
+    </script>
+
+    <footer style= "background-color: black; color: lightgreen; padding: 10px; font-size: 16pt; cursor: pointer" ondblclick="showWelcome()">&copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
