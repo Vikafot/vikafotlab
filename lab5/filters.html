@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 5</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+</head>
+<body>
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt; cursor: pointer" onclick="showAuthor()">НГТУ, ФБ, Лабораторная работа 5
+    </header>
+
+    <main>
+        <div class="filter-control">
+            <label for="blurValue">Фильтр blur:</label>
+            <input type="range" id="blurValue" min="0" max="20" value="0" onchange="blurChange()">
+            <span id="blurOutput">0px</span>
+        </div>
+        
+        <div class="image-container">
+            <img src="b9a75516248779bead50d84c52daebf3.jpg" id="filterImage" alt="Пример изображения">
+        </div>
+    </main>
+
+    <script>
+       function blurChange() {
+            const value = document.getElementById('blurValue').value;
+            document.getElementById('blurOutput').textContent = value + 'px';
+            document.getElementById('filterImage').style.filter = 'blur(' + value + 'px)';
+        }
+        
+        function showAuthor() {
+            let author = 'Автор страницы: \nФот Виктория Владимировна';
+            alert(author);
+        }
+        function showWelcome() {
+            let welcomeMessage = "Приветствую вас на моей странице!\n" + "Мой девиз: Учись, пробуй, создавай!";
+            alert(welcomeMessage);
+        }
+
+    </script>
+
+    <footer style= "background-color: black; color: lightgreen; padding: 10px; font-size: 16pt; cursor: pointer" ondblclick="showWelcome()">&copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
