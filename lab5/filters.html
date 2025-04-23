@@ -13,23 +13,83 @@
     <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt; cursor: pointer" onclick="showAuthor()">НГТУ, ФБ, Лабораторная работа 5
     </header>
 
-    <main>
-        <div class="filter-control">
-            <label for="blurValue">Фильтр blur:</label>
-            <input type="range" id="blurValue" min="0" max="20" value="0" onchange="blurChange()">
-            <span id="blurOutput">0px</span>
-        </div>
-        
-        <div class="image-container">
-            <img src="b9a75516248779bead50d84c52daebf3.jpg" id="filterImage" alt="Пример изображения">
-        </div>
-    </main>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #dcadad;
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    margin-bottom: 20px;
+    color: #0b0a0a;
+
+}
+
+img {
+    display: block;
+    margin: 20px auto;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.reset-button {
+    display: block;
+    margin: 30px auto;
+    padding: 10px 20px;
+    background-color: rgb(22, 14, 14);
+    color: rgb(160, 42, 42);
+    font-size: 16pt;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+    </style>
 
     <script>
-       function blurChange() {
-            const value = document.getElementById('blurValue').value;
-            document.getElementById('blurOutput').textContent = value + 'px';
-            document.getElementById('filterImage').style.filter = 'blur(' + value + 'px)';
+        function updateFilters() {
+            const blurValue = document.getElementById('blurValue').value + 'px';
+            const brightnessValue = document.getElementById('brightnessValue').value + '%';
+            const contrastValue = document.getElementById('contrastValue').value + '%';
+            const grayscaleValue = document.getElementById('grayscaleValue').value + '%';
+            const hueRotateValue = document.getElementById('hueRotateValue').value + 'deg';
+            const invertValue = document.getElementById('invertValue').value + '%';
+            const saturateValue = document.getElementById('saturateValue').value + '%';
+            const sepiaValue = document.getElementById('sepiaValue').value + '%';
+            
+            document.getElementById('blurOutput').innerText = blurValue;
+            document.getElementById('brightnessOutput').innerText = brightnessValue;
+            document.getElementById('contrastOutput').innerText = contrastValue;
+            document.getElementById('grayscaleOutput').innerText = grayscaleValue;
+            document.getElementById('hueRotateOutput').innerText = hueRotateValue;
+            document.getElementById('invertOutput').innerText = invertValue;
+            document.getElementById('saturateOutput').innerText = saturateValue;
+            document.getElementById('sepiaOutput').innerText = sepiaValue;
+            
+         
+            document.getElementById('blurImage').style.filter = `blur(${blurValue})`;
+            document.getElementById('brightnessImage').style.filter = `brightness(${brightnessValue})`;
+            document.getElementById('contrastImage').style.filter = `contrast(${contrastValue})`;
+            document.getElementById('grayscaleImage').style.filter = `grayscale(${grayscaleValue})`;
+            document.getElementById('hueRotateImage').style.filter = `hue-rotate(${hueRotateValue})`;
+            document.getElementById('invertImage').style.filter = `invert(${invertValue})`;
+            document.getElementById('saturateImage').style.filter = `saturate(${saturateValue})`;
+            document.getElementById('sepiaImage').style.filter = `sepia(${sepiaValue})`;
+        }
+        
+        function resetFilters() {
+            document.getElementById('blurValue').value = 0;
+            document.getElementById('brightnessValue').value = 100;
+            document.getElementById('contrastValue').value = 100;
+            document.getElementById('grayscaleValue').value = 0;
+            document.getElementById('hueRotateValue').value = 0;
+            document.getElementById('invertValue').value = 0;
+            document.getElementById('saturateValue').value = 100;
+            document.getElementById('sepiaValue').value = 0;
+            
+            updateFilters();
         }
         
         function showAuthor() {
@@ -40,8 +100,72 @@
             let welcomeMessage = "Приветствую вас на моей странице!\n" + "Мой девиз: Учись, пробуй, создавай!";
             alert(welcomeMessage);
         }
-
+        
+        window.onload = function() {
+            updateFilters();
+        };
     </script>
+
+        <main>
+                <div class="filter-control">
+                    <label for="blurValue">Blur (размытие):</label>
+                    <input type="range" min="0" max="20" value="0" oninput="updateFilters()" id="blurValue">
+                    <span class="output-value" id="blurOutput">0px</span>
+                    <div><img src="b9a75516248779bead50d84c52daebf3.jpg" id="blurImage" height="350px"></div>
+                </div>
+                
+                <div class="filter-control">
+                    <label for="brightnessValue">Brightness (яркость):</label>
+                    <input type="range" min="0" max="500" value="100" oninput="updateFilters()" id="brightnessValue">
+                    <span class="output-value" id="brightnessOutput">100%</span>
+                    <div><img src="b9a75516248779bead50d84c52daebf3.jpg" id="brightnessImage" height="350px"></div>
+                </div>
+                
+                <div class="filter-control">
+                    <label for="contrastValue">Contrast (контраст):</label>
+                    <input type="range" min="0" max="500" value="100" oninput="updateFilters()" id="contrastValue">
+                    <span class="output-value" id="contrastOutput">100%</span>
+                    <div><img src="b9a75516248779bead50d84c52daebf3.jpg" id="contrastImage" height="350px"></div>
+                </div>
+                
+                <div class="filter-control">
+                    <label for="grayscaleValue">Grayscale (оттенки серого):</label>
+                    <input type="range" min="0" max="100" value="0" oninput="updateFilters()" id="grayscaleValue">
+                    <span class="output-value" id="grayscaleOutput">0%</span>
+                    <div><img src="b9a75516248779bead50d84c52daebf3.jpg" id="grayscaleImage" height="350px"></div>
+                </div>
+                
+                <div class="filter-control">
+                    <label for="hueRotateValue">Hue-rotate (оттенок):</label>
+                    <input type="range" min="0" max="360" value="0" oninput="updateFilters()" id="hueRotateValue">
+                    <span class="output-value" id="hueRotateOutput">0deg</span>
+                    <div><img src="b9a75516248779bead50d84c52daebf3.jpg" id="hueRotateImage" height="350px"></div>
+                </div>
+                
+                <div class="filter-control">
+                    <label for="invertValue">Invert (инверсия):</label>
+                    <input type="range" min="0" max="100" value="0" oninput="updateFilters()" id="invertValue">
+                    <span class="output-value" id="invertOutput">0%</span>
+                    <div><img src="b9a75516248779bead50d84c52daebf3.jpg" id="invertImage" height="350px"></div>
+                </div>
+                
+                <div class="filter-control">
+                    <label for="saturateValue">Saturate (насыщенность):</label>
+                    <input type="range" min="0" max="500" value="100" oninput="updateFilters()" id="saturateValue">
+                    <span class="output-value" id="saturateOutput">100%</span>
+                    <div><img src="b9a75516248779bead50d84c52daebf3.jpg" id="saturateImage" height="350px"></div>
+                </div>
+                
+                <div class="filter-control">
+                    <label for="sepiaValue">Sepia (сепия):</label>
+                    <input type="range" min="0" max="100" value="0" oninput="updateFilters()" id="sepiaValue">
+                    <span class="output-value" id="sepiaOutput">0%</span>
+                    <div><img src="b9a75516248779bead50d84c52daebf3.jpg" id="sepiaImage" height="350px"></div>
+                </div>
+                
+                <button onclick="resetFilters()">Сбросить все фильтры</button>
+            </div>
+        </main>
 
     <footer style= "background-color: black; color: lightgreen; padding: 10px; font-size: 16pt; cursor: pointer" ondblclick="showWelcome()">&copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
     </footer>
