@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 5</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+</head>
+<body>
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt; cursor: pointer; text-align: left;" onclick="showAuthor()">НГТУ, ФБ, Лабораторная работа 5
+    </header>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            text-align: center;
+        }
+        img {
+            max-width: 50%;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 12px;
+            transition: filter 0.3s ease;
+        }
+        #info {
+            margin-top: 20px;
+            font-size: 15px;
+            color: #000;
+            text-align: center;
+        }
+        #help {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #171515;
+            text-align: center;
+        }
+    </style>
+    
+    <img src="1344472184_b3d780eed3_c.jpg" id="image" alt="Природа">
+    
+    <div id="info">Фильтр: blur(0px)</div>
+    
+    <div id="help">
+        Наведите мышь на картинку для размытия.<br>
+        Зажмите <b>Ctrl</b> — серый цвет (grayscale).<br>
+        Зажмите <b>Alt</b> — смена оттенка (hue-rotate).<br>
+        Зажмите <b>Shift</b> — инверсия цветов (invert).<br>
+        Эффект увеличивается справа налево.
+    </div>
+    
+    <script>
+    const img = document.getElementById('image');
+    const info = document.getElementById('info');
+    
+    img.addEventListener('mousemove', function(e) {
+        const rect = img.getBoundingClientRect();
+        const posX = e.clientX - rect.left;
+        const width = rect.width;
+        const percent = Math.min(Math.max(posX / width, 0), 1);
+    
+        let filter = '';
+        let description = '';
+    
+        if (e.ctrlKey) {
+            const grayscale = percent * 100;
+            filter = `grayscale(${grayscale.toFixed(0)}%)`;
+            description = `Фильтр: grayscale(${grayscale.toFixed(0)}%)`;
+        } else if (e.altKey) {
+            const hue = percent * 360;
+            filter = `hue-rotate(${hue.toFixed(0)}deg)`;
+            description = `Фильтр: hue-rotate(${hue.toFixed(0)}deg)`;
+        } else if (e.shiftKey) {
+            const invert = percent * 100;
+            filter = `invert(${invert.toFixed(0)}%)`;
+            description = `Фильтр: invert(${invert.toFixed(0)}%)`;
+        } else {
+            const blur = percent * 10;
+            filter = `blur(${blur.toFixed(1)}px)`;
+            description = `Фильтр: blur(${blur.toFixed(1)}px)`;
+        }
+    
+        img.style.filter = filter;
+        info.innerHTML = description;
+    });
+    
+    img.addEventListener('mouseleave', function() {
+        img.style.filter = 'none';
+        info.innerHTML = 'Фильтр: blur(0px)';
+    });
+
+    function showAuthor() {
+            let author = 'Автор страницы: \nФот Виктория Владимировна';
+            alert(author);
+        }
+        function showWelcome() {
+            let welcomeMessage = "Приветствую вас на моей странице!\n" + "Мой девиз: Учись, пробуй, создавай!";
+            alert(welcomeMessage);
+        }
+    </script>
+    
+    <footer style= "background-color: black; color: lightgreen; padding: 10px; font-size: 16pt; cursor: pointer" ondblclick="showWelcome()">&copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
