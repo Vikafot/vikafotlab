@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 5</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+</head>
+<body>
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt; cursor: pointer" onclick="showAuthor()">НГТУ, ФБ, Лабораторная работа 5
+    </header>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            justify-content: center;
+            height: 100vh;
+            background: #f0f0f0;
+            margin: 0;
+        }
+   
+        #eventBlock {
+            width: 200px;
+            height: 200px;
+            background-color: #ffffff;
+            border: 3px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: crosshair;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    
+    <main>
+        <div id="eventBlock" onmousemove="showCoords(event)" onmouseenter="hoverIn()" onmouseleave="hoverOut()">
+            Наведите мышь
+        </div>
+    </main>
+    
+    <script>
+        function showAuthor() {
+            let author = 'Автор страницы: \nФот Виктория Владимировна';
+            alert(author);
+        }
+        function showWelcome() {
+            let welcomeMessage = "Приветствую вас на моей странице!\n" + "Мой девиз: Учись, пробуй, создавай!";
+            alert(welcomeMessage);
+        }
+    
+        function showCoords(e) {
+        const block = document.getElementById('eventBlock');
+        let coordsInfo = `X: ${e.offsetX}px<br>Y: ${e.offsetY}px`;
+
+        let keysInfo = '';
+
+        block.style.backgroundColor = '#e0f7fa';
+        block.style.borderColor = '#00796b';
+        block.style.boxShadow = '0 0 20px rgba(0, 150, 136, 0.7)';
+        block.style.color = 'black';
+        block.style.transform = 'scale(1)';
+
+        if (e.ctrlKey) {
+            keysInfo += '<br><strong>Нажата клавиша Ctrl</strong>';
+            block.style.backgroundColor = '#ffe0e0';
+            block.style.borderColor = '#ff0000';
+            block.style.boxShadow = '0 0 15px rgba(255, 0, 0, 0.7)';
+        }
+        if (e.altKey) {
+            keysInfo += '<br><strong>Нажата клавиша Alt</strong>';
+            block.style.backgroundColor = '#e0ffe0';
+            block.style.borderColor = '#00aa00';
+            block.style.boxShadow = '0 0 15px rgba(0, 170, 0, 0.7)';
+        }
+        if (e.shiftKey) {
+            keysInfo += '<br><strong>Нажата клавиша Shift</strong>';
+            block.style.backgroundColor = '#e0e0ff';
+            block.style.borderColor = '#0000ff';
+            block.style.boxShadow = '0 0 15px rgba(0, 0, 255, 0.7)';
+            block.style.transform = 'scale(1.1)';
+        }
+
+        block.innerHTML = coordsInfo + keysInfo;
+    }
+
+    function hoverIn() {
+        const block = document.getElementById('eventBlock');
+        block.style.backgroundColor = '#e0f7fa';
+        block.style.borderColor = '#00796b';
+        block.style.boxShadow = '0 0 20px rgba(0, 150, 136, 0.7)';
+    }
+
+    function hoverOut() {
+        const block = document.getElementById('eventBlock');
+        block.style.backgroundColor = '#ffffff';
+        block.style.borderColor = '#333';
+        block.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.1)';
+        block.style.color = 'black';
+        block.style.transform = 'scale(1)';
+    }
+    </script>
+
+    <footer style= "background-color: black; color: lightgreen; padding: 10px; font-size: 16pt; cursor: pointer" ondblclick="showWelcome()">&copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
