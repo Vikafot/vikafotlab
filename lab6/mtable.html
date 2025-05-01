@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 6</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+</head>
+<body onload="showMutipleTable()">
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt;">
+        НГТУ, ФБ, Лабораторная работа 5  
+    </header> 
+    <style>
+ 
+        #mtable {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        #mtable h1 {
+            color: #084708;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .multiplication-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #7be1b3;
+            transition: all 0.3s ease;
+        }
+        
+        .multiplication-row:nth-child(even) {
+            background-color: #91d291;
+        }
+        
+        .multiplication-row:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+        .controls {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e6f7ff;
+            border-radius: 5px;
+        }
+        
+        .control-group {
+            margin-bottom: 10px;
+        }
+        
+        label {
+            display: inline-block;
+            width: 120px;
+            color: #021c02;
+            font-weight: bold;
+        }
+        
+        input {
+            padding: 5px;
+            border: 1px solid #006400;
+            border-radius: 3px;
+            width: 60px;
+        }
+        
+        button {
+            padding: 8px 15px;
+            background-color: #285428;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background-color: #0b1a0b;
+        }
+        
+        .error {
+            color: red;
+            margin-top: 10px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    
+    <main>
+        <div id="mtable">
+            <h1>Таблица умножения</h1>
+            <div id="multiplication-table"></div>
+            <div class="controls">
+                <div class="control-group">
+                    <label for="multiplier">Умножить на:</label>
+                    <input type="number" id="multiplier" value="7" min="1">
+                </div>
+                <div class="control-group">
+                    <label for="start">Начать с:</label>
+                    <input type="number" id="start" value="1" min="1">
+                </div>
+                <div class="control-group">
+                    <label for="end">Закончить на:</label>
+                    <input type="number" id="end" value="10" min="1">
+                </div>
+                <button onclick="updateTable()">Показать таблицу</button>
+                <div id="error" class="error"></div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTable();
+        });
+        
+        function updateTable() {
+            const multiplier = parseInt(document.getElementById('multiplier').value);
+            const start = parseInt(document.getElementById('start').value);
+            const end = parseInt(document.getElementById('end').value);
+            const errorDiv = document.getElementById('error');
+            const tableDiv = document.getElementById('multiplication-table');
+            
+            if (isNaN(multiplier) || isNaN(start) || isNaN(end)) {
+                errorDiv.textContent = 'Пожалуйста, введите корректные числа';
+                return;
+            }
+            
+            if (start > end) {
+                errorDiv.textContent = 'Ошибка: "Начать с" должно быть меньше или равно "Закончить на"';
+                return;
+            }
+            
+            errorDiv.textContent = '';
+            tableDiv.innerHTML = '';
+            
+            for(let i = start; i <= end; i++) {
+                const row = document.createElement('div');
+                row.className = 'multiplication-row';
+                row.innerHTML = `
+                    <span>${i} × ${multiplier} =</span>
+                    <span><strong>${i * multiplier}</strong></span>
+                `;
+                tableDiv.appendChild(row);
+            }
+        }
+    </script>
+
+    <footer>
+        &copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
