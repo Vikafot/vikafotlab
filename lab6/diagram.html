@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 6</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+</head>
+<body onload="showDiagram()">
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt;">
+        НГТУ, ФБ, Лабораторная работа 6  
+    </header>
+
+    <style>
+        #diag-container {
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px;
+        }
+        #diag {
+            display: flex;
+            align-items: flex-end;
+            height: 500px;
+            gap: 10px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+        .bar {
+            width: 50px;
+            background-color: #76c7c0;
+            border: 1px solid #3084d3;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 3px 3px 5px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            transition: height 0.5s ease;
+        }
+    </style>
+    
+    <script>
+        function showDiagram(){
+            let data = [86, 35, 25, 28, 92, 60, 41, 17, 9, 43];
+            let colors = ['#76c7c0', '#5dade2', '#48c9b0', '#3498db', '#1abc9c', '#2980b9', '#16a085', '#2471a3', '#117864', '#154360'];
+            let bars = document.getElementsByClassName('bar');
+            const diagHeight = document.getElementById('diag').clientHeight;
+            const maxData = Math.max(...data);
+            const k = diagHeight / maxData * 0.9;
+    
+            for (let i = 0; i < data.length; i++) {
+                bars[i].style.height = k * data[i] + 'px';
+                bars[i].style.backgroundColor = colors[i];
+                bars[i].textContent = data[i];
+        }
+    
+        window.onload = function() {
+            showDiagram();
+        };
+    }
+    </script>
+    
+        <main>
+            <div id="diag-container">
+                <div id="diag">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+        </main>
+    </body>
+    
+    <footer>
+        &copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
