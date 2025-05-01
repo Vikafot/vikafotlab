@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 6</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+    <script src="book.js" defer></script>
+    <style>
+        .book {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(17, 16, 16, 0.1);
+        }
+        .green-book {
+            background-color: #e6f7e6;
+            border-left: 5px solid #2e8b57;
+        }
+        .blue-book {
+            background-color: #e6f0f7;
+            border-left: 5px solid #18548f;
+        }
+        .author {
+            font-weight: bold;
+            color: #0a0909;
+        }
+        .title {
+            color: #0e0d0d;
+        }
+        .info {
+            color: #0d0c0c;
+            margin-top: 5px;
+        }
+        .bestseller {
+            background-color: rgb(39, 224, 25);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .out-of-stock {
+            opacity: 0.7;
+            position: relative;
+        }
+        .out-of-stock::after {
+            content: "Нет в наличии";
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            background-color: #d81313;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+    </style>
+    <script>
+        function showBooks() {
+            const bookList = document.getElementById('bookList');
+            bookList.innerHTML = '<h1>Список книг</h1>';
+
+            books.forEach((book, index) => {
+                const bookClass = index % 2 === 0 ? 'green-book' : 'blue-book';
+                const stockClass = book.inStock ? '' : 'out-of-stock';
+
+                bookList.innerHTML += `
+                    <div class="book ${bookClass} ${stockClass}">
+                        <div class="author">${book.author}</div>
+                        <div class="title">${book.name}</div>
+                        <div class="info">
+                            Год издания: ${book.publicationYear} |
+                            Цена: ${book.price} руб.
+                            ${book.bestseller ? '<span class="bestseller">Бестселлер</span>' : ''}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        window.onload = showBooks;
+    </script>
+</head>
+<body>
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt;">
+        НГТУ, ФБ, Лабораторная работа 6  
+    </header>
+
+    <main>
+        <div id="bookList"></div>
+    </main>
+
+    <footer>
+        &copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
