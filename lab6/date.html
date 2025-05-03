@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 6</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+</head>
+<body onload="showDate()">
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt;">
+        НГТУ, ФБ, Лабораторная работа 6  
+    </header>
+
+    <script>
+   function showDate() {
+    const out = document.getElementById('current-date');
+    const today = new Date();
+    
+    out.innerHTML = `
+        <h2 style="color:#2c3e50;text-align:center">🌍 Дата и время</h2>
+        <div style="font-family:Arial; max-width:500px; margin:0 auto">
+            ${[
+                ['ru-RU', 'Россия', '#e3f2fd'],
+                ['en-ZA', 'ЮАР', '#e8f5e9'],
+                ['ar-EG', 'Египет', '#e3f2fd'],
+                ['el-GR', 'Греция', '#e8f5e9'],
+                ['ur-PK', 'Пакистан', '#e3f2fd'],
+                ['zh-CN', 'Китай', '#e8f5e9']
+            ].map(([locale, name, color]) => `
+                <div style="margin:10px;padding:10px;border-radius:5px;background:${color}">
+                    <b style="color:#1976d2">${name}:</b> 
+                    <span style="float:right">${today.toLocaleString(locale)}</span>
+                </div>
+            `).join('')}
+            <div style="text-align:center;color:#7f8c8d;margin-top:20px">
+                Обновлено: ${today.toLocaleString('ru-RU')}
+            </div>
+        </div>
+    `;
+}
+    </script>
+
+    <main>
+        <div id="current-date"></div>
+    </main>
+
+    <footer>
+        &copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
