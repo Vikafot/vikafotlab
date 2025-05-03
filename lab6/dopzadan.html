@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 6</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+</head>
+<body>
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt;">
+        НГТУ, ФБ, Лабораторная работа 6  
+    </header> 
+
+    <style>
+        #chart {
+            display: flex;
+            align-items: flex-end;
+            height: 300px;
+            border-left: 1px solid #2196F3;
+            border-bottom: 1px solid #4CAF50;
+            margin-bottom: 20px;
+            padding-left: 10px;
+            background-color: #f5f5f5;
+        }
+
+        .bar {
+            width: 30px;
+            margin: 0 5px;
+            position: relative;
+            text-align: center;
+            font-size: 10px;
+        }
+
+        .min-temp {
+            background-color: #BBDEFB;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .max-temp {
+            background-color: #C8E6C9;
+            border-radius: 0 0 3px 3px;
+        }
+
+        .highlight .min-temp {
+            background-color: #2196F3;
+        }
+
+        .highlight .max-temp {
+            background-color: #4CAF50;
+        }
+
+        #temp-info {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #E8F5E9;
+            border-left: 4px solid #2196F3;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .temp-label {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .max-temp-label {
+            top: -20px;
+            color: #2E7D32;
+        }
+
+        .min-temp-label {
+            bottom: -20px;
+            color: #1565C0;
+        }
+
+        label {
+            color: #333;
+        }
+
+        input[type="number"] {
+            padding: 5px;
+            border: 1px solid #2196F3;
+            border-radius: 3px;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+        }
+    </style>
+
+    <main>
+        <div id="chart"></div>
+        <div id="temp-info"></div>
+        <label for="day-input">День: </label>
+        <input type="number" id="day-input" min="1" max="30">
+    </main>
+
+    <script>
+        const chart = document.getElementById('chart');
+        const tempInfo = document.getElementById('temp-info');
+        const dayInput = document.getElementById('day-input');
+
+        const temperatures = [];
+
+        for (let i = 0; i < 30; i++) {
+            const min = Math.floor(Math.random() * 15 - 10); 
+            const max = min + Math.floor(Math.random() * 15 + 5);
+            temperatures.push({ min, max });
+
+            const bar = document.createElement('div');
+            bar.className = 'bar';
+            bar.dataset.index = i;
+
+            const maxLabel = document.createElement('div');
+            maxLabel.className = 'temp-label max-temp-label';
+            maxLabel.textContent = `${max}°C`;
+
+            const minLabel = document.createElement('div');
+            minLabel.className = 'temp-label min-temp-label';
+            minLabel.textContent = `${min}°C`;
+
+            const maxDiv = document.createElement('div');
+            maxDiv.className = 'max-temp';
+            maxDiv.style.height = (max - min) * 5 + 'px';
+
+            const minDiv = document.createElement('div');
+            minDiv.className = 'min-temp';
+            minDiv.style.height = min < 0 ? (-min) * 5 + 'px' : '0px';
+
+            bar.appendChild(maxLabel);
+            bar.appendChild(minLabel);
+            bar.appendChild(minDiv);
+            bar.appendChild(maxDiv);
+            chart.appendChild(bar);
+        }
+
+        let lastHighlighted = null;
+
+        dayInput.addEventListener('input', () => {
+            const day = parseInt(dayInput.value);
+            if (day >= 1 && day <= 30) {
+                if (lastHighlighted !== null) {
+                    chart.children[lastHighlighted].classList.remove('highlight');
+                }
+
+                const index = day - 1;
+                chart.children[index].classList.add('highlight');
+                lastHighlighted = index;
+
+                const { min, max } = temperatures[index];
+                tempInfo.innerHTML = `
+                    <strong>День ${day}:</strong><br>
+                    Минимальная температура: <span style="color: #1565C0;">${min}°C</span><br>
+                    Максимальная температура: <span style="color: #2E7D32;">${max}°C</span>
+                `;
+            } else {
+                if (lastHighlighted !== null) {
+                    chart.children[lastHighlighted].classList.remove('highlight');
+                    lastHighlighted = null;
+                }
+                tempInfo.textContent = '';
+            }
+        });
+    </script>
+
+    <footer>
+        &copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
