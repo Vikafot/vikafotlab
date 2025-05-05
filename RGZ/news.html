@@ -5,142 +5,229 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Новости - Камчатскэнерго</title>
   <link rel="shortcut icon" href="../favicon12.ico" type="image/x-icon">
+  <link rel="icon" href="../1.png">
+  <link rel="icon" href="../2.png">
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    * {
       margin: 0;
       padding: 0;
-      display: flex;
-      background-color: #f5f5f5;
-      min-height: 100vh;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
     }
     
-    aside {
+    body {
+      display: flex;
+      min-height: 100vh;
+      background-color: #f3f4f6;
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+    
+    .sidebar {
       width: 250px;
-      background-color: #18379f;
+      background-color: #1e3a8a;
       color: white;
       position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      padding: 20px;
-      box-sizing: border-box;
+      height: 100vh;
+      padding: 2rem 1rem;
+      overflow-y: auto;
+      z-index: 100;
     }
     
     .logo {
-      font-size: 24px;
+      font-size: 1.8rem;
       font-weight: bold;
-      margin-bottom: 30px;
-    }
-    
-    nav a {
-      display: block;
+      margin-bottom: 2rem;
+      text-align: center;
       color: white;
-      text-decoration: none;
-      padding: 10px 15px;
-      margin-bottom: 5px;
+    }
+    
+    .nav-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .nav-item {
+      padding: 0.8rem 1rem;
       border-radius: 4px;
+      transition: all 0.3s ease;
+      color: white;
     }
     
-    nav a:hover {
-      background-color: #1e3a8a;
+    .nav-item:hover {
+      background-color: #1e40af;
     }
     
-    nav a.active {
-      background-color: #1e3a8a;
+    .nav-item.active {
+      background-color: #1e40af;
+      font-weight: bold;
     }
     
-    main {
+    .main-content {
       margin-left: 250px;
-      padding: 30px;
-      width: calc(100% - 250px);
-      box-sizing: border-box;
+      flex: 1;
+      padding: 2rem;
     }
     
     h1 {
-      color: #1e40af;
-      margin-bottom: 30px;
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+      color: #1e3a8a;
     }
     
     .news-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
+      gap: 1.5rem;
     }
     
     .news-card {
       background-color: white;
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      padding: 20px;
-      transition: transform 0.3s;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     
     .news-card:hover {
       transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
     
     .news-date {
       color: #666;
-      font-size: 14px;
-      margin-bottom: 10px;
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
     }
     
     .news-title {
-      font-size: 18px;
+      font-size: 1.2rem;
       font-weight: bold;
-      margin-bottom: 10px;
-      color: #1e40af;
+      margin-bottom: 1rem;
+      color: #1e3a8a;
     }
     
     .news-preview {
       color: #333;
-      margin-bottom: 15px;
-      line-height: 1.4;
+      margin-bottom: 1.2rem;
+      line-height: 1.5;
     }
     
     .show-more {
-      background-color: #1e40af;
+      background-color: #1e3a8a;
       color: white;
       border: none;
-      padding: 8px 15px;
+      padding: 0.6rem 1.2rem;
       border-radius: 4px;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 0.9rem;
+      transition: background-color 0.3s ease;
     }
     
     .show-more:hover {
-      background-color: #1e3a8a;
+      background-color: #1e40af;
     }
     
     .news-full {
       display: none;
-      margin-top: 15px;
-      padding-top: 15px;
+      margin-top: 1.2rem;
+      padding-top: 1.2rem;
       border-top: 1px solid #eee;
       color: #333;
-      line-height: 1.5;
+      line-height: 1.6;
+    }
+    
+    .footer {
+      background-color: #1e3a8a;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 3rem;
+    }
+    
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background-color: #1e3a8a;
+      color: white;
+      padding: 0.8rem 1.2rem;
+      border-radius: 50%;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      z-index: 99;
+    }
+    
+    .back-to-top:hover {
+      background-color: #1e40af;
+      transform: translateY(-3px);
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        padding: 1rem;
+      }
+      
+      .main-content {
+        margin-left: 0;
+        padding: 1.5rem;
+      }
+      
+      .nav-menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      
+      .nav-item {
+        padding: 0.6rem 0.8rem;
+        margin: 0;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .news-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .back-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        padding: 0.6rem 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <aside>
+  <aside class="sidebar">
     <div class="logo">Камчатскэнерго</div>
-    <nav>
-      <a href="menu.html" class="block hover:bg-blue-800 p-2 rounded">Главная</a>
-      <a href="company.html" class="block hover:bg-blue-800 p-2 rounded">О компании</a>
-      <a href="news.html" class="block hover:bg-blue-800 p-2 rounded active">Новости</a>
-      <a href="currency.html" class="block hover:bg-blue-800 p-2 rounded">Курс валют</a>
-      <a href="contacts.html" class="block hover:bg-blue-800 p-2 rounded">Контактные данные</a>
-      <a href="video.html" class="block hover:bg-blue-800 p-2 rounded">Видео</a>
+    <nav class="nav-menu">
+      <a href="menu.html" class="nav-item">Главная</a>
+      <a href="company.html" class="nav-item">О компании</a>
+      <a href="news.html" class="nav-item active">Новости</a>
+      <a href="currency.html" class="nav-item">Курс валют</a>
+      <a href="contacts.html" class="nav-item">Контактные данные</a>
+      <a href="video.html" class="nav-item">Видео</a>
     </nav>
   </aside>
 
-  <main>
+  <main class="main-content">
     <h1>Новости компании</h1>
     
     <div class="news-container">
-      <!-- Новость 1 -->
       <div class="news-card">
         <div class="news-date">15.05.2024</div>
         <h3 class="news-title">Камчатскэнерго завершило ремонтную программу перед отопительным сезоном</h3>
@@ -151,7 +238,6 @@
         </div>
       </div>
       
-      <!-- Новость 2 -->
       <div class="news-card">
         <div class="news-date">10.05.2024</div>
         <h3 class="news-title">В Камчатскэнерго подвели итоги работы за первый квартал 2024 года</h3>
@@ -162,7 +248,6 @@
         </div>
       </div>
       
-      <!-- Новость 3 -->
       <div class="news-card">
         <div class="news-date">05.05.2024</div>
         <h3 class="news-title">Камчатскэнерго внедряет систему интеллектуального учета электроэнергии</h3>
@@ -173,7 +258,6 @@
         </div>
       </div>
       
-      <!-- Новость 4 -->
       <div class="news-card">
         <div class="news-date">28.04.2024</div>
         <h3 class="news-title">Камчатскэнерго провело экологическую акцию по очистке береговой линии</h3>
@@ -184,7 +268,6 @@
         </div>
       </div>
       
-      <!-- Новость 5 -->
       <div class="news-card">
         <div class="news-date">20.04.2024</div>
         <h3 class="news-title">В Камчатскэнерго прошли учения по ликвидации условной аварии</h3>
@@ -195,7 +278,6 @@
         </div>
       </div>
       
-      <!-- Новость 6 -->
       <div class="news-card">
         <div class="news-date">15.04.2024</div>
         <h3 class="news-title">Камчатскэнерго модернизирует систему теплоснабжения в Елизово</h3>
@@ -206,7 +288,6 @@
         </div>
       </div>
       
-      <!-- Новость 7 -->
       <div class="news-card">
         <div class="news-date">10.04.2024</div>
         <h3 class="news-title">Камчатскэнерго увеличивает мощность солнечной электростанции</h3>
@@ -247,6 +328,12 @@
         </div>
       </div>
     </div>
+
+    <footer class="footer">
+      <p>© 2025 ПАО "Камчатскэнерго". Все права защищены.</p>
+    </footer>
+
+    <a href="#" class="back-to-top">↑</a>
   </main>
 
   <script>
