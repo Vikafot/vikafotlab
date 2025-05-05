@@ -3,88 +3,285 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Камчатскэнерго</title>
+  <title>Камчатскэнерго - Энергетическая компания Камчатского края</title>
   <link rel="shortcut icon" href="../favicon12.ico" type="image/x-icon">
-  <link rel="icon" href="../1.png">
-  <link rel="icon" href="../2.png">
-  <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="../1.png">
+    <link rel="icon" href="../2.png">
   <style>
-    .active {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+    
+    body {
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.6;
+      display: flex;
+    }
+    
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #1e3a8a;
+      color: white;
+      position: fixed;
+      height: 100vh;
+      padding: 2rem 1rem;
+      overflow-y: auto;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    
+    .nav-menu {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .nav-item {
+      padding: 0.8rem 1rem;
+      margin-bottom: 0.5rem;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    
+    .nav-item:hover {
       background-color: #1e40af;
+    }
+    
+    .nav-item.active {
+      background-color: #1e40af;
+      font-weight: bold;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      flex: 1;
+      padding: 2rem;
+      max-width: calc(100% - 250px);
+    }
+    
+    .hero-banner {
+      position: relative;
+      height: 400px;
+      margin-bottom: 2rem;
+    }
+    
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .hero-title {
+      color: white;
+      font-size: 3rem;
+      text-align: center;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    
+    .content-block {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: #1e3a8a;
+      border-bottom: 2px solid #1e3a8a;
+      padding-bottom: 0.5rem;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .gallery-item {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+    
+    .gallery-item:hover {
+      transform: scale(1.03);
+    }
+    
+    .gallery-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .news-item {
+      padding: 1.5rem;
+      border-bottom: 1px solid #eee;
+      transition: background-color 0.3s;
+    }
+    
+    .news-item:hover {
+      background-color: #f9f9f9;
+    }
+    
+    .news-date {
+      color: #666;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .news-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: #1e3a8a;
+    }
+
+    .footer {
+      background-color: #1e3a8a;
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 2rem;
+    }
+  
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+      }
+      
+      .main-content {
+        margin-left: 0;
+        max-width: 100%;
+      }
+      
+      .hero-title {
+        font-size: 2rem;
+      }
+      
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+      
+      .nav-menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .nav-item {
+        margin: 0.3rem;
+      }
     }
   </style>
 </head>
-<body class="flex bg-gray-100 min-h-screen">
-  <aside class="w-64 bg-blue-900 text-white fixed top-0 left-0 h-full p-6 space-y-4">
-    <div class="text-2xl font-bold mb-6">Камчатскэнерго</div>
-    <nav class="space-y-4">
-      <a href="menu.html" class="block hover:bg-blue-800 p-2 rounded active">Главная</a>
-      <a href="company.html" class="block hover:bg-blue-800 p-2 rounded">О компании</a>
-      <a href="news.html" class="block hover:bg-blue-800 p-2 rounded">Новости</a>
-      <a href="currency.html" class="block hover:bg-blue-800 p-2 rounded">Курс валют</a>
-      <a href="contacts.html" class="block hover:bg-blue-800 p-2 rounded">Контактные данные</a>
-      <a href="video.html" class="block hover:bg-blue-800 p-2 rounded">Видео</a>
+<body>
+  <aside class="sidebar">
+    <div class="logo">Камчатскэнерго</div>
+    <nav class="nav-menu">
+      <a href="menu.html" class="nav-item active">Главная</a>
+      <a href="company.html" class="nav-item">О компании</a>
+      <a href="news.html" class="nav-item">Новости</a>
+      <a href="currency.html" class="nav-item">Курс валют</a>
+      <a href="contacts.html" class="nav-item">Контактные данные</a>
+      <a href="video.html" class="nav-item">Видео</a>
     </nav>
   </aside>
 
-  <main class="ml-64 flex-1">
-    <section class="w-full h-64 relative"> 
-      <img src="https://sun9-67.userapi.com/impg/XXIsFAoAjyipcHqeTW6O01EVeyr1NemF-PJSjg/OuV0lmswq9o.jpg?size=1130x578&quality=96&sign=72b7993f75d95b6a9a1844a6efd7f633&type=album" alt="Камчатскэнерго главная" class="w-full h-full object-cover">
-      <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
-        <h1 class="text-white text-4xl md:text-6xl font-bold">Добро пожаловать в Камчатскэнерго</h1>
+  <main class="main-content">
+    <section class="hero-banner">
+      <img src="https://sun9-67.userapi.com/impg/XXIsFAoAjyipcHqeTW6O01EVeyr1NemF-PJSjg/OuV0lmswq9o.jpg?size=1130x578&quality=96&sign=72b7993f75d95b6a9a1844a6efd7f633&type=album" alt="Камчатскэнерго" class="hero-image">
+      <div class="hero-overlay">
+        <h1 class="hero-title">Добро пожаловать в Камчатскэнерго</h1>
       </div>
     </section>
 
-    <div class="p-8 space-y-10">
-      <section>
-        <p class="mb-6 text-lg">Компания, обеспечивающая энергоснабжение Камчатского края.</p>
-      </section>
+    <section class="content-block">
+      <p class="company-description">ПАО "Камчатскэнерго" - энергетическая компания, обеспечивающая надежное энергоснабжение Камчатского края. Мы работаем для того, чтобы в каждом доме региона было тепло и светло.</p>
+    </section>
 
-    <section class="bg-white shadow p-6 rounded-md max-w-2xl">
-      <h2 class="text-2xl font-semibold mb-4">Годовой отчет 2024</h2>
-      <ul class="list-disc list-inside text-gray-700 space-y-2">
-        <li>Выручка: <strong>5,2 млрд DKK</strong></li>
-        <li>Чистая прибыль: <strong>1,1 млрд DKK</strong></li>
-        <li>Объём поставленной электроэнергии: <strong>2,7 ТВт·ч</strong></li>
-        <li>Инвестиции в инфраструктуру: <strong>650 млн DKK</strong></li>
-        <li>Количество сотрудников: <strong>1 200 человек</strong></li>
-        <li>Доля возобновляемых источников: <strong>18%</strong></li>
+    <section class="content-block">
+      <h2 class="section-title">Годовой отчет 2024</h2>
+      <ul class="report-list">
+        <li><strong>Выручка:</strong> 5,2 млрд DKK</li>
+        <li><strong>Чистая прибыль:</strong> 1,1 млрд DKK</li>
+        <li><strong>Объём поставленной электроэнергии:</strong> 2,7 ТВт·ч</li>
+        <li><strong>Инвестиции в инфраструктуру:</strong> 650 млн DKK</li>
+        <li><strong>Количество сотрудников:</strong> 1 200 человек</li>
+        <li><strong>Доля возобновляемых источников:</strong> 18%</li>
       </ul>
     </section>
 
-    <section>
-      <h2 class="text-2xl font-semibold mb-4">Фотогалерея</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <img src="https://avatars.mds.yandex.net/i?id=91acfd20621e255538f651f900581132507882ce-4298456-images-thumbs&n=13" alt="Фото 1" class="rounded shadow">
-        <img src="https://rao-esv.ru/upload/iblock/7ee/dsc_1960.jpg" alt="Фото 2" class="rounded shadow">
-        <img src="https://zskk.ru/upload/iblock/59f/14wazcauqdlf9cqntqu8ev9c1zycpi9m.jpg" alt="Фото 3" class="rounded shadow">
+    <section class="content-block">
+      <h2 class="section-title">Фотогалерея</h2>
+      <div class="gallery">
+        <div class="gallery-item">
+          <img src="https://avatars.mds.yandex.net/i?id=91acfd20621e255538f651f900581132507882ce-4298456-images-thumbs&n=13" alt="Энергообъекты Камчатки" class="gallery-image">
+        </div>
+        <div class="gallery-item">
+          <img src="https://rao-esv.ru/upload/iblock/7ee/dsc_1960.jpg" alt="Работа специалистов" class="gallery-image">
+        </div>
+        <div class="gallery-item">
+          <img src="https://zskk.ru/upload/iblock/59f/14wazcauqdlf9cqntqu8ev9c1zycpi9m.jpg" alt="Инфраструктура" class="gallery-image">
+        </div>
       </div>
     </section>
 
-    <section>
-      <h2 class="text-2xl font-semibold mb-4">Последние новости</h2>
-      <div class="space-y-4">
-        <div class="bg-white p-4 rounded shadow">
-          <h3 class="text-lg font-bold">04.05.2025 – Обновление инфраструктуры</h3>
-          <p>Проведены работы по модернизации оборудования в Петропавловске-Камчатском.</p>
-        </div>
-        <div class="bg-white p-4 rounded shadow">
-          <h3 class="text-lg font-bold">02.05.2025 – Новые тарифы</h3>
-          <p>С 1 мая 2025 года вступили в силу обновленные тарифы на электроэнергию.</p>
-        </div>
-        <div class="bg-white p-4 rounded shadow">
-          <h3 class="text-lg font-bold">30.04.2025 – Социальная поддержка</h3>
-          <p>Камчатскэнерго оказала помощь учреждениям здравоохранения региона.</p>
-        </div>
-        <div class="bg-white p-4 rounded shadow">
-          <h3 class="text-lg font-bold">28.04.2025 – Энергосбережение</h3>
-          <p>Стартовала программа повышения энергоэффективности для предприятий и населения.</p>
-        </div>
-        <div class="bg-white p-4 rounded shadow">
-          <h3 class="text-lg font-bold">25.04.2025 – Экологическая инициатива</h3>
-          <p>Начата высадка деревьев в рамках экологического проекта компании.</p>
-        </div>
+    <section class="content-block">
+      <h2 class="section-title">Последние новости</h2>
+      <div class="news-list">
+        <article class="news-item">
+          <div class="news-date">04.05.2025</div>
+          <h3 class="news-title">Обновление инфраструктуры</h3>
+          <p class="news-text">Проведены масштабные работы по модернизации оборудования в Петропавловске-Камчатском, что позволит повысить надежность энергоснабжения.</p>
+        </article>
+        <article class="news-item">
+          <div class="news-date">02.05.2025</div>
+          <h3 class="news-title">Новые тарифы на электроэнергию</h3>
+          <p class="news-text">С 1 мая 2025 года вступили в силу обновленные тарифы на электроэнергию для населения и предприятий Камчатского края.</p>
+        </article>
+        <article class="news-item">
+          <div class="news-date">30.04.2025</div>
+          <h3 class="news-title">Социальная поддержка</h3>
+          <p class="news-text">Камчатскэнерго оказала помощь учреждениям здравоохранения региона в рамках программы социальной ответственности бизнеса.</p>
+        </article>
       </div>
     </section>
-  </body>
-  </html>
+
+    <footer class="footer">
+      <p>© 2025 ПАО "Камчатскэнерго". Все права защищены.</p>
+    </footer>
+  </main>
+</body>
+</html>

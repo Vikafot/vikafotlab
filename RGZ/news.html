@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Новости - Камчатскэнерго</title>
+  <link rel="shortcut icon" href="../favicon12.ico" type="image/x-icon">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      background-color: #f5f5f5;
+      min-height: 100vh;
+    }
+    
+    aside {
+      width: 250px;
+      background-color: #18379f;
+      color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+    
+    nav a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      margin-bottom: 5px;
+      border-radius: 4px;
+    }
+    
+    nav a:hover {
+      background-color: #1e3a8a;
+    }
+    
+    nav a.active {
+      background-color: #1e3a8a;
+    }
+    
+    main {
+      margin-left: 250px;
+      padding: 30px;
+      width: calc(100% - 250px);
+      box-sizing: border-box;
+    }
+    
+    h1 {
+      color: #1e40af;
+      margin-bottom: 30px;
+    }
+    
+    .news-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    .news-card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 20px;
+      transition: transform 0.3s;
+    }
+    
+    .news-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .news-date {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    
+    .news-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #1e40af;
+    }
+    
+    .news-preview {
+      color: #333;
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+    
+    .show-more {
+      background-color: #1e40af;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    
+    .show-more:hover {
+      background-color: #1e3a8a;
+    }
+    
+    .news-full {
+      display: none;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+      color: #333;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <aside>
+    <div class="logo">Камчатскэнерго</div>
+    <nav>
+      <a href="menu.html" class="block hover:bg-blue-800 p-2 rounded">Главная</a>
+      <a href="company.html" class="block hover:bg-blue-800 p-2 rounded">О компании</a>
+      <a href="news.html" class="block hover:bg-blue-800 p-2 rounded active">Новости</a>
+      <a href="currency.html" class="block hover:bg-blue-800 p-2 rounded">Курс валют</a>
+      <a href="contacts.html" class="block hover:bg-blue-800 p-2 rounded">Контактные данные</a>
+      <a href="video.html" class="block hover:bg-blue-800 p-2 rounded">Видео</a>
+    </nav>
+  </aside>
+
+  <main>
+    <h1>Новости компании</h1>
+    
+    <div class="news-container">
+      <!-- Новость 1 -->
+      <div class="news-card">
+        <div class="news-date">15.05.2024</div>
+        <h3 class="news-title">Камчатскэнерго завершило ремонтную программу перед отопительным сезоном</h3>
+        <p class="news-preview">ПАО "Камчатскэнерго" завершило подготовку к предстоящему отопительному сезону. В рамках ремонтной кампании было выполнено...</p>
+        <button class="show-more" onclick="toggleFullText(this)">Показать</button>
+        <div class="news-full">
+          <p>ПАО "Камчатскэнерго" завершило подготовку к предстоящему отопительному сезону. В рамках ремонтной кампании было выполнено техническое обслуживание и ремонт основного оборудования на всех энергообъектах компании. Особое внимание уделено котельным и тепловым сетям, чтобы обеспечить бесперебойное теплоснабжение жителей Камчатского края в зимний период.</p>
+        </div>
+      </div>
+      
+      <!-- Новость 2 -->
+      <div class="news-card">
+        <div class="news-date">10.05.2024</div>
+        <h3 class="news-title">В Камчатскэнерго подвели итоги работы за первый квартал 2024 года</h3>
+        <p class="news-preview">На заседании правления ПАО "Камчатскэнерго" были подведены итоги финансово-хозяйственной деятельности компании за первый квартал...</p>
+        <button class="show-more" onclick="toggleFullText(this)">Показать</button>
+        <div class="news-full">
+          <p>На заседании правления ПАО "Камчатскэнерго" были подведены итоги финансово-хозяйственной деятельности компании за первый квартал 2024 года. Отмечен рост выработки электроэнергии на 5% по сравнению с аналогичным периодом прошлого года. Также было отмечено снижение потерь в сетях благодаря реализации программы модернизации электросетевого комплекса.</p>
+        </div>
+      </div>
+      
+      <!-- Новость 3 -->
+      <div class="news-card">
+        <div class="news-date">05.05.2024</div>
+        <h3 class="news-title">Камчатскэнерго внедряет систему интеллектуального учета электроэнергии</h3>
+        <p class="news-preview">ПАО "Камчатскэнерго" начало масштабный проект по внедрению системы интеллектуального учета электроэнергии. В пилотном режиме...</p>
+        <button class="show-more" onclick="toggleFullText(this)">Показать</button>
+        <div class="news-full">
+          <p>ПАО "Камчатскэнерго" начало масштабный проект по внедрению системы интеллектуального учета электроэнергии. В пилотном режиме новые "умные" счетчики уже установлены в нескольких микрорайонах Петропавловска-Камчатского. Система позволит дистанционно снимать показания, оперативно выявлять случаи безучетного потребления и предоставлять потребителям детализированную информацию о расходе электроэнергии.</p>
+        </div>
+      </div>
+      
+      <!-- Новость 4 -->
+      <div class="news-card">
+        <div class="news-date">28.04.2024</div>
+        <h3 class="news-title">Камчатскэнерго провело экологическую акцию по очистке береговой линии</h3>
+        <p class="news-preview">Сотрудники ПАО "Камчатскэнерго" приняли участие в ежегодной экологической акции по очистке береговой линии Авачинской бухты...</p>
+        <button class="show-more" onclick="toggleFullText(this)">Показать</button>
+        <div class="news-full">
+          <p>Сотрудники ПАО "Камчатскэнерго" приняли участие в ежегодной экологической акции по очистке береговой линии Авачинской бухты. В мероприятии участвовало более 100 работников компании, которые собрали несколько тонн мусора. Это часть корпоративной программы по охране окружающей среды, в рамках которой компания также реализует проекты по снижению выбросов на своих энергообъектах.</p>
+        </div>
+      </div>
+      
+      <!-- Новость 5 -->
+      <div class="news-card">
+        <div class="news-date">20.04.2024</div>
+        <h3 class="news-title">В Камчатскэнерго прошли учения по ликвидации условной аварии</h3>
+        <p class="news-preview">На одной из подстанций ПАО "Камчатскэнерго" прошли плановые противоаварийные учения. Специалисты отрабатывали действия...</p>
+        <button class="show-more" onclick="toggleFullText(this)">Показать</button>
+        <div class="news-full">
+          <p>На одной из подстанций ПАО "Камчатскэнерго" прошли плановые противоаварийные учения. Специалисты отрабатывали действия при условном отключении электрооборудования. Учения показали высокую готовность персонала к оперативному реагированию на нештатные ситуации. Особое внимание уделялось координации между различными службами компании для минимизации времени восстановления электроснабжения.</p>
+        </div>
+      </div>
+      
+      <!-- Новость 6 -->
+      <div class="news-card">
+        <div class="news-date">15.04.2024</div>
+        <h3 class="news-title">Камчатскэнерго модернизирует систему теплоснабжения в Елизово</h3>
+        <p class="news-preview">ПАО "Камчатскэнерго" приступило к реализации проекта по модернизации системы теплоснабжения города Елизово. В рамках первого...</p>
+        <button class="show-more" onclick="toggleFullText(this)">Показать</button>
+        <div class="news-full">
+          <p>ПАО "Камчатскэнерго" приступило к реализации проекта по модернизации системы теплоснабжения города Елизово. В рамках первого этапа будет заменено более 2 км тепловых сетей с применением современных изолированных труб. Это позволит сократить теплопотери и повысить надежность теплоснабжения жителей города. Проект реализуется в рамках инвестиционной программы компании.</p>
+        </div>
+      </div>
+      
+      <!-- Новость 7 -->
+      <div class="news-card">
+        <div class="news-date">10.04.2024</div>
+        <h3 class="news-title">Камчатскэнерго увеличивает мощность солнечной электростанции</h3>
+        <p class="news-preview">ПАО "Камчатскэнерго" объявило о расширении своей солнечной электростанции. Новые солнечные панели позволят увеличить...</p>
+        <button class="show-more" onclick="toggleFullText(this)">Показать</button>
+        <div class="news-full">
+          <p>ПАО "Камчатскэнерго" объявило о расширении своей солнечной электростанции. Новые солнечные панели позволят увеличить мощность объекта на 30%. Это часть стратегии компании по развитию возобновляемых источников энергии в изолированной энергосистеме Камчатки. Солнечная генерация особенно эффективна в летний период, позволяя экономить дорогостоящее привозное топливо.</p>
+        </div>
+      </div>
+      
+      <div class="news-card">
+        <div class="news-date">05.04.2024</div>
+        <h3 class="news-title">Камчатскэнерго подписало соглашение о сотрудничестве с вузами</h3>
+        <p class="news-preview">ПАО "Камчатскэнерго" заключило соглашения о сотрудничестве с ведущими техническими вузами Дальнего Востока. В рамках...</p>
+        <button class="show-more" onclick="toggleFullText(this)">Показать</button>
+        <div class="news-full">
+          <p>ПАО "Камчатскэнерго" заключило соглашения о сотрудничестве с ведущими техническими вузами Дальнего Востока. В рамках партнерства планируется совместная подготовка специалистов для энергетической отрасли, проведение научных исследований и внедрение инновационных технологий. Компания также будет предоставлять студентам возможность прохождения практики и стажировки на своих объектах.</p>
+        </div>
+      </div>
+      
+      <div class="news-card">
+        <div class="news-date">01.04.2024</div>
+        <h3 class="news-title">Камчатскэнерго вводит новые тарифы на электроэнергию</h3>
+        <p class="news-preview">С 1 апреля 2024 года ПАО "Камчатскэнерго" вводит новые тарифы на электроэнергию для населения и предприятий. Изменения...</p>
+        <button class="show-more" onclick="toggleFullText(this)">Показать</button>
+        <div class="news-full">
+          <p>С 1 апреля 2024 года ПАО "Камчатскэнерго" вводит новые тарифы на электроэнергию для населения и предприятий. Изменения связаны с ростом затрат на топливо и необходимостью инвестиций в модернизацию инфраструктуры. Для социально незащищенных категорий граждан предусмотрены льготы. Компания также продолжает реализацию программ энергосбережения, которые помогают потребителям снижать расходы на электроэнергию.</p>
+        </div>
+      </div>
+      
+      <div class="news-card">
+        <div class="news-date">25.03.2024</div>
+        <h3 class="news-title">Камчатскэнерго отмечает профессиональный праздник</h3>
+        <p class="news-preview">ПАО "Камчатскэнерго" празднует День энергетика. В честь профессионального праздника лучшие сотрудники компании были...</p>
+        <button class="show-more" onclick="toggleFullText(this)">Показать</button>
+        <div class="news-full">
+          <p>ПАО "Камчатскэнерго" празднует День энергетика. В честь профессионального праздника лучшие сотрудники компании были награждены почетными грамотами и благодарностями. Особо отмечены работники, проработавшие в компании более 20 лет. В рамках праздничных мероприятий также прошли спортивные соревнования и творческие конкурсы среди сотрудников и их семей. Руководство компании поздравило коллектив с праздником, отметив важность их работы для обеспечения энергобезопасности Камчатского края.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function toggleFullText(button) {
+      const fullText = button.nextElementSibling;
+      if (fullText.style.display === 'block') {
+        fullText.style.display = 'none';
+        button.textContent = 'Показать';
+      } else {
+        fullText.style.display = 'block';
+        button.textContent = 'Скрыть';
+      }
+    }
+  </script>
+</body>
+</html>
