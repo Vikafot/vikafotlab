@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 7</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+</head>
+<body>
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt;">
+        НГТУ, ФБ, Лабораторная работа 7  
+    </header> 
+    <style>
+        .stock-container {
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .positive {
+            color: green;
+            font-weight: bold;
+        }
+        .negative {
+            color: red;
+            font-weight: bold;
+        }
+        .neutral {
+            color: black;
+        }
+        .summary {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f7ef;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-bottom: 15px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .loading {
+            display: none;
+            margin: 10px 0;
+            color: #666;
+        }
+
+    </style>
+</head>
+<body>
+    <main class="stock-container">
+        <button id="load-btn" onclick="loadStockData()">Показать курс акций О'кей</button>
+        <div id="loading" class="loading">Загрузка данных...</div>
+        
+        <table id="stock-table">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Цена</th>
+                    <th>Изменение</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div id="detail" class="summary"></div>
+    </main>
+
+    <script>
+        const stockPrices = [
+            28.5, 30.2, 30.8, 31.3, 31.7,
+            29.0, 26.5, 26.1, 27.8, 27.2
+        ];
+        
+        const stockDates = [
+            "23.04.2025", "24.04.2025", "25.04.2025", "26.04.2025", "27.04.2025",
+            "28.04.2025", "29.04.2025", "30.04.2025", "01.05.2025", "02.05.2025"
+        ];
+
+        function loadStockData() {
+            const table = document.getElementById('stock-table').getElementsByTagName('tbody')[0];
+            const detailDiv = document.getElementById('detail');
+            const loadingDiv = document.getElementById('loading');
+            const loadBtn = document.getElementById('load-btn');
+         
+            table.innerHTML = '';
+            detailDiv.innerHTML = '';
+            loadingDiv.style.display = 'block';
+            loadBtn.disabled = true;
+     
+            setTimeout(() => {
+                try {
+                    for(let i = 0; i < stockPrices.length; i++) {
+                        const row = table.insertRow();
+                        
+                        const dateCell = row.insertCell(0);
+                        dateCell.textContent = stockDates[i];
+           
+                        const priceCell = row.insertCell(1);
+                        priceCell.textContent = stockPrices[i].toFixed(2);
+                      
+                        const changeCell = row.insertCell(2);
+                        if (i === 0) {
+                            changeCell.textContent = "—";
+                            changeCell.className = "neutral";
+                        } else {
+                            const change = stockPrices[i] - stockPrices[i-1];
+                            const changeFormatted = change.toFixed(2);
+                            
+                            if (change > 0) {
+                                changeCell.textContent = "+" + changeFormatted;
+                                changeCell.className = "positive";
+                            } else if (change < 0) {
+                                changeCell.textContent = changeFormatted;
+                                changeCell.className = "negative";
+                            } else {
+                                changeCell.textContent = changeFormatted;
+                                changeCell.className = "neutral";
+                            }
+                        }
+                    }
+                 
+                    const average = stockPrices.reduce((sum, price) => sum + price, 0) / stockPrices.length;
+                    const min = Math.min(...stockPrices);
+                    const max = Math.max(...stockPrices);
+               
+                    const minIndex = stockPrices.indexOf(min);
+                    const maxIndex = stockPrices.indexOf(max);
+       
+                    detailDiv.innerHTML = `
+                        <h3>Статистика по акциям О'кей:</h3>
+                        <p>Средняя цена: <strong>${average.toFixed(2)} руб.</strong></p>
+                        <p>Минимальная цена: <strong>${min.toFixed(2)} руб.</strong> (${stockDates[minIndex]})</p>
+                        <p>Максимальная цена: <strong>${max.toFixed(2)} руб.</strong> (${stockDates[maxIndex]})</p>
+                    `;
+                    
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    detailDiv.innerHTML = `<p style="color: red;">Ошибка при загрузке данных. Пожалуйста, попробуйте позже.</p>`;
+                } finally {
+                    loadingDiv.style.display = 'none';
+                    loadBtn.textContent = "Данные загружены";
+                }
+            }, 1000); 
+        }
+    </script>
+
+    <footer>
+        &copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
