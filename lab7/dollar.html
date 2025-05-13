@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 7</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+</head>
+<body>
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt;">
+        НГТУ, ФБ, Лабораторная работа 7  
+    </header>
+    <style>
+        .exchange-container {
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .positive {
+            color: green;
+        }
+        .negative {
+            color: red;
+        }
+        .neutral {
+            color: black;
+        }
+        .summary {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f7ef;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .loading {
+            display: none;
+            margin: 10px 0;
+            color: #666;
+        }
+    </style>
+      <main class="exchange-container">
+        <button id="load-btn" onclick="loadExchangeRates()">Загрузить курс доллара</button>
+        <div id="loading" class="loading">Загрузка данных с сайта ЦБ РФ...</div>
+        
+        <table id="dollar-table">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Курс</th>
+                    <th>Изменение</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <div id="detail" class="summary"></div>
+    </main>
+
+    <script src="dollar-data.js"></script>
+    <script>
+        function loadExchangeRates() {
+            const table = document.getElementById('dollar-table').getElementsByTagName('tbody')[0];
+            const detailDiv = document.getElementById('detail');
+            const loadingDiv = document.getElementById('loading');
+            const loadBtn = document.getElementById('load-btn');
+            
+            table.innerHTML = '';
+            detailDiv.innerHTML = '';
+            loadingDiv.style.display = 'block';
+            loadBtn.disabled = true;
+            
+            setTimeout(() => {
+                try {
+                    for(let i = 0; i < exchange.length; i++) {
+                        const row = table.insertRow();
+
+                        const dateCell = row.insertCell(0);
+                        dateCell.textContent = dates[i];
+                        
+                        const rateCell = row.insertCell(1);
+                        rateCell.textContent = exchange[i].toFixed(4);
+                        
+                        const changeCell = row.insertCell(2);
+                        if (i === 0) {
+                            changeCell.textContent = "—";
+                            changeCell.className = "neutral";
+                        } else {
+                            const change = exchange[i] - exchange[i-1];
+                            changeCell.textContent = change.toFixed(4);
+                            
+                            if (change > 0) {
+                                changeCell.className = "positive";
+                                changeCell.textContent = "+" + change.toFixed(4);
+                            } else if (change < 0) {
+                                changeCell.className = "negative";
+                            } else {
+                                changeCell.className = "neutral";
+                            }
+                        }
+                    }
+                    
+                    const average = exchange.reduce((sum, rate) => sum + rate, 0) / exchange.length;
+                    const min = Math.min(...exchange);
+                    const max = Math.max(...exchange);
+
+                    const minIndex = exchange.indexOf(min);
+                    const maxIndex = exchange.indexOf(max);
+                    
+                    detailDiv.innerHTML = `
+                        <h3>Статистика за период с ${dates[0]} по ${dates[dates.length-1]}:</h3>
+                        <p>Средний курс: <strong>${average.toFixed(2)}</strong> руб.</p>
+                        <p>Минимальный курс: <strong>${min.toFixed(2)}</strong> руб. (${dates[minIndex]})</p>
+                        <p>Максимальный курс: <strong>${max.toFixed(2)}</strong> руб. (${dates[maxIndex]})</p>
+                        <p>Количество дней: ${exchange.length}</p>
+                    `;
+                    
+                } catch (error) {
+                    console.error('Ошибка:', error);
+                    detailDiv.innerHTML = `<p style="color: red;">Ошибка при обработке данных. Пожалуйста, попробуйте позже.</p>`;
+                } finally {
+                    loadingDiv.style.display = 'none';
+                    loadBtn.disabled = false;
+                    loadBtn.textContent = "Обновить данные";
+                }
+            }, 1000); 
+        }
+    </script>
+    <footer>
+        &copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
