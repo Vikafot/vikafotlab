@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 7</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+</head>
+<body>
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt;">
+        НГТУ, ФБ, Лабораторная работа 7  
+    </header> 
+    <style>
+        .dynamic-block {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+    </style>
+
+<script>
+    let blockCounter = 1;
+    function addNewBlock() {
+        const container = document.getElementById('blocks-container');
+        const newBlock = document.createElement('div');
+        
+        newBlock.className = 'dynamic-block';
+        newBlock.style.backgroundColor = getRandomColor();
+        newBlock.style.height = '40px';
+        newBlock.style.border = '1px solid #ddd';
+        newBlock.textContent = `Блок №${blockCounter++}`;
+        newBlock.style.display = 'flex';
+        newBlock.style.alignItems = 'center';
+        newBlock.style.justifyContent = 'center';
+        newBlock.style.color = 'white';
+        newBlock.style.fontWeight = 'bold';
+        
+        container.appendChild(newBlock);
+    }
+    
+    function getRandomColor() {
+        const colors = [
+            '#4CAF50', '#2196F3', '#9C27B0', 
+            '#FF9800', '#E91E63', '#009688'
+        ];
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+</script>
+
+<main style="padding: 20px;">
+    <button 
+        onclick="addNewBlock()" 
+        style="
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        "
+        onmouseover="this.style.backgroundColor='#45a049'"
+        onmouseout="this.style.backgroundColor='#4CAF50'"
+    >
+        Добавить блок
+    </button>
+    
+    <div id="blocks-container" style="margin-top: 20px;"></div>
+</main>
+    <footer>
+        &copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
