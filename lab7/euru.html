@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 7</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+</head>
+<body>
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt;">
+        НГТУ, ФБ, Лабораторная работа 7  
+    </header> 
+    <style>
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            display: block;
+            margin: 20px auto;
+        }
+        
+        button:hover {
+            background-color: #19a250;
+        }
+        
+        .result-container {
+            border: 2px solid #4CAF50; 
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px auto;
+            background-color: #f9f9f9;
+            max-width: 600px; 
+        }
+        
+        .rate-info {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-bottom: 1px solid #eee; 
+        }
+        
+        .up {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .neutral {
+            color: #7f8c8d;
+        }
+        
+        .source {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-top: 15px;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            text-align: center; 
+        }
+        
+        .error {
+            color: #e74c3c;
+            padding: 10px;
+            border: 1px solid #e74c3c;
+            border-radius: 5px;
+            background-color: #fadbd8;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 20px;
+            border: 1px dashed #4CAF50;
+            border-radius: 5px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #4CAF50;
+            margin-top: 0;
+            padding-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="fetchButton">Получить курс евро</button>
+    
+    <div id="resultContainer"></div>
+    
+    <script>
+        document.getElementById('fetchButton').addEventListener('click', getEuroExchangeRate);
+        
+        async function getEuroExchangeRate() {
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.innerHTML = '<div class="loading">Загрузка данных...</div>';
+            
+            try {
+                const url = 'https://www.cbr-xml-daily.ru/daily_json.js';
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`Ошибка HTTP: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (!data.Valute || !data.Valute.EUR) {
+                    throw new Error('Данные о курсе евро не найдены');
+                }
+                
+                const euro = data.Valute.EUR;
+                const currentRate = euro.Value;
+                const previousRate = euro.Previous;
+                const date = new Date(data.Date);
+                
+                const difference = currentRate - previousRate;
+                let trendClass, trendSymbol;
+                
+                if (difference > 0) {
+                    trendClass = 'up';
+                    trendSymbol = '↑';
+                } else if (difference < 0) {
+                    trendClass = 'down';
+                    trendSymbol = '↓';
+                } else {
+                    trendClass = 'neutral';
+                    trendSymbol = '→';
+                }
+                
+                resultContainer.innerHTML = `
+                    <div class="result-container">
+                        <h2>Курс евро к рублю</h2>
+                        <div class="rate-info">
+                            <strong>Дата:</strong> ${date.toLocaleDateString('ru-RU')}
+                        </div>
+                        <div class="rate-info">
+                            <strong>Текущий курс:</strong> ${currentRate.toFixed(4)} руб.
+                        </div>
+                        <div class="rate-info">
+                            <strong>Предыдущий курс:</strong> ${previousRate.toFixed(4)} руб.
+                        </div>
+                        <div class="rate-info ${trendClass}">
+                            <strong>Изменение:</strong> ${Math.abs(difference).toFixed(4)} руб. ${trendSymbol}
+                        </div>
+                        <div class="source">
+                         <a href="https://www.cbr-xml-daily.ru/" target="_blank">Центральный банк РФ</a>
+                        </div>
+                    </div>
+                `;
+                
+            } catch (error) {
+                resultContainer.innerHTML = `
+                    <div class="error">
+                        <strong>Ошибка при получении данных:</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+                console.error('Ошибка:', error);
+            }
+        }
+    </script>
+
+    <footer>
+        &copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
