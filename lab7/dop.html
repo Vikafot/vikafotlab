@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лабораторная работа 7</title>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../favicon-32x32.png">
+    <link rel="icon" href="../favicon-16x16.png">
+</head>
+<body>
+    <header style="background-color: black; color: lightgreen; padding: 10px; font-size: 16pt;">
+        НГТУ, ФБ, Лабораторная работа 7  
+    </header> 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .weather-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .current-weather {
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .weather-card {
+            background-color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 10px;
+            min-width: 200px;
+            text-align: center;
+        }
+        .chart-container {
+            margin-top: 30px;
+            position: relative;
+            height: 400px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <div class="weather-container">
+            <h1>Прогноз погоды в Новосибирске</h1>
+            
+            <div class="current-weather">
+                <div class="weather-card" id="current-temp">
+                    <h3>Текущая температура</h3>
+                    <p>Загрузка...</p>
+                </div>
+                <div class="weather-card" id="current-humidity">
+                    <h3>Текущая влажность</h3>
+                    <p>Загрузка...</p>
+                </div>
+            </div>
+            
+            <button onclick="loadWeatherData()">Обновить данные</button>
+            
+            <div class="chart-container">
+                <canvas id="weatherChart"></canvas>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let weatherChart;
+        
+        async function loadWeatherData() {
+            try {
+                document.getElementById('current-temp').querySelector('p').textContent = 'Загрузка...';
+                document.getElementById('current-humidity').querySelector('p').textContent = 'Загрузка...';
+                
+                const currentResponse = await fetch('https://api.open-meteo.com/v1/forecast?latitude=55.0415&longitude=82.9346&current=temperature_2m,relative_humidity_2m&timezone=Asia%2FBangkok');
+                const currentData = await currentResponse.json();
+                
+                const currentTemp = currentData.current.temperature_2m;
+                const currentHumidity = currentData.current.relative_humidity_2m;
+                
+                document.getElementById('current-temp').querySelector('p').innerHTML = 
+                    `${currentTemp} °C <small>(${new Date(currentData.current.time).toLocaleTimeString()})</small>`;
+                document.getElementById('current-humidity').querySelector('p').innerHTML = 
+                    `${currentHumidity}% <small>(${new Date(currentData.current.time).toLocaleTimeString()})</small>`;
+                
+                const forecastResponse = await fetch('https://api.open-meteo.com/v1/forecast?latitude=55.0415&longitude=82.9346&hourly=temperature_2m,relative_humidity_2m&timezone=Asia%2FBangkok&forecast_days=1');
+                const forecastData = await forecastResponse.json();
+            
+                const times = forecastData.hourly.time.map(time => new Date(time).toLocaleTimeString([], {hour: '2-digit'}));
+                const temperatures = forecastData.hourly.temperature_2m;
+                const humidities = forecastData.hourly.relative_humidity_2m;
+                
+                const ctx = document.getElementById('weatherChart').getContext('2d');
+                
+                if (weatherChart) {
+                    weatherChart.destroy();
+                }
+                
+                weatherChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: times,
+                        datasets: [
+                            {
+                                label: 'Температура (°C)',
+                                data: temperatures,
+                                backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 1,
+                                yAxisID: 'y'
+                            },
+                            {
+                                label: 'Влажность (%)',
+                                data: humidities,
+                                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1,
+                                type: 'line',
+                                yAxisID: 'y1'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                type: 'linear',
+                                display: true,
+                                position: 'left',
+                                title: {
+                                    display: true,
+                                    text: 'Температура (°C)'
+                                }
+                            },
+                            y1: {
+                                type: 'linear',
+                                display: true,
+                                position: 'right',
+                                title: {
+                                    display: true,
+                                    text: 'Влажность (%)'
+                                },
+                                grid: {
+                                    drawOnChartArea: false
+                                },
+                                min: 0,
+                                max: 100
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: ''
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        label += context.parsed.y;
+                                        if (context.datasetIndex === 0) {
+                                            label += ' °C';
+                                        } else {
+                                            label += '%';
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                
+            } catch (error) {
+                console.error('Ошибка при загрузке данных:', error);
+                alert('Произошла ошибка при загрузке данных о погоде. Пожалуйста, попробуйте позже.');
+            }
+        }
+        
+        window.onload = loadWeatherData;
+    </script>
+</body>
+</html>
+    <footer>
+        &copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
+    </footer>
+</body>
+</html>
