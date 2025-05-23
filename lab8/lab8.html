@@ -48,12 +48,20 @@
             <div class="card mb-4" style="width: 18rem;">
                 <div class="card-body">
                     <h2 class="h5">Цветы</h2>
+                    <button @click="addFlower" class="btn btn-sm btn-outline-primary mb-3">
+                        <i class="bi bi-plus"></i> Добавить цветок
+                    </button>
                     <ul class="list-group list-group-flush mt-3">
                         <li v-for="(flower, id) in flowers" class="list-group-item d-flex justify-content-between align-items-center">
                             {{ flower }}
-                            <button @click="edit(id, flower)" class="btn btn-sm btn-outline-secondary">
-                                <i class="bi bi-pencil"></i>
-                            </button>
+                            <div>
+                                <button @click="edit(id, flower)" class="btn btn-sm btn-outline-secondary me-1">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                                <button @click="removeFlower(id)" class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -62,12 +70,15 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <h2 class="h5">Цветы</h2>
+                    <button @click="addFlower" class="btn btn-sm btn-outline-primary mb-3">
+                        <i class="bi bi-plus"></i> Добавить цветок
+                    </button>
                     <div class="table-info">
                         <table class="table table-info">
                             <thead>
                                 <tr>
                                     <th>Название</th>
-                                    <th>Редактировать</th>
+                                    <th>Действия</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,8 +88,11 @@
                                         <span v-else>{{ flower }}</span>
                                     </td>
                                     <td>
-                                        <button @click="edit(id, flower)" class="btn btn-sm btn-outline-secondary" v-if="flower !== null">
+                                        <button @click="edit(id, flower)" class="btn btn-sm btn-outline-secondary me-1" v-if="flower !== null">
                                             <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button @click="removeFlower(id)" class="btn btn-sm btn-outline-danger me-1" v-if="flower !== null">
+                                            <i class="bi bi-trash"></i>
                                         </button>
                                         <div class="spinner-border spinner-border-sm" role="status" v-if="flower === null"></div>
                                     </td>
@@ -155,6 +169,15 @@
                 sum() {
                     this.result = this.a + this.b;
                 },
+                removeFlower(id) {
+                    this.flowers.splice(id, 1);
+                },
+                addFlower() {
+                    const newFlower = prompt('Введите название нового цветка:');
+                    if (newFlower) {
+                        this.flowers.push(newFlower);
+                    }
+                }
             }
         }).mount('#app');
     </script>
