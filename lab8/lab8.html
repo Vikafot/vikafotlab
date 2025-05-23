@@ -17,74 +17,105 @@
         НГТУ, ФБ, Лабораторная работа 8 
     </header> 
 
-    <main>
+    <main class="container">
         <div id="app">
-            <h1 :title="messageRus">{{ message }}</h1>
-            <p>Счётчик: {{ counter }}</p>
-            <button @click="incCounter" v-if="counter < 10">++</button>
-            <button @click="decCounter" v-if="counter > 0">--</button>
-            <hr>
-
-            <h2>Пользователь:</h2>
-            <div>Имя: {{ user.name }}</div>
-            <div>Возраст: {{ user.age }}</div>
-            <div>Телефон: {{ user.tel }}</div>
-            <hr>
-
-            <div class="card" style="width: 18rem;">
+            <div class="card mb-4">
                 <div class="card-body">
-            <h2 class="card-title">Цветы</h2>
-            <ul class="list-group">
-                <li v-for="(flower, id) in flowers" class="list-group-item">
-                    {{ flower }} <button @click="edit(id, flower)">?</button>
-                </li>
-            </ul>
+                    <h1 class="h4" :title="messageRus">{{ message }}</h1>
+                    <div class="d-flex align-items-center gap-2 mt-3">
+                        <span class="me-2">Счётчик: {{ counter }}</span>
+                        <button @click="incCounter" class="btn btn-sm btn-outline-secondary" v-if="counter < 10">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                        <button @click="decCounter" class="btn btn-sm btn-outline-secondary" v-if="counter > 0">
+                            <i class="bi bi-dash"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-            <hr>
 
-            <h2>Цветы</h2>
-            <table class="table table-info">
-              <thead>
-                <tr>
-                 <th>Название</th>
-                 <th>Редактировать</th>
-                </tr>
-             </thead>
-             <tr v-for="(flower, id) in flowers">
-             <td>
-                <span v-if="flower === null">Загружается...</span>
-                <span v-else>{{ flower }}</span>
-            </td>
-            <td>
-                <button @click="edit(id, flower)" class="btn btn-primary" v-if="flower !== null">
-                    <i class="bi bi-pencil-square"></i>?
-                </button>
-                <div class="spinner-border" role="status" v-if="flower === null"></div>
-            </td>
-          </tr>
-          </table>
-           <hr>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="h5">Пользователь:</h2>
+                    <ul class="list-unstyled mt-3">
+                        <li class="mb-1"><strong>Имя:</strong> {{ user.name }}</li>
+                        <li class="mb-1"><strong>Возраст:</strong> {{ user.age }}</li>
+                        <li><strong>Телефон:</strong> {{ user.tel }}</li>
+                    </ul>
+                </div>
+            </div>
 
-            <h2>Калькулятор</h2>
-           <div class="row g-5">
-            <div class="col-auto">
-                <input type="number" v-model="a" class="form-control">
+            <div class="card mb-4" style="width: 18rem;">
+                <div class="card-body">
+                    <h2 class="h5">Цветы</h2>
+                    <ul class="list-group list-group-flush mt-3">
+                        <li v-for="(flower, id) in flowers" class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ flower }}
+                            <button @click="edit(id, flower)" class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class="col-auto">
-            +
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="h5">Цветы</h2>
+                    <div class="table-info">
+                        <table class="table table-info">
+                            <thead>
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Редактировать</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(flower, id) in flowers">
+                                    <td>
+                                        <span v-if="flower === null" class="text-muted">Загружается...</span>
+                                        <span v-else>{{ flower }}</span>
+                                    </td>
+                                    <td>
+                                        <button @click="edit(id, flower)" class="btn btn-sm btn-outline-secondary" v-if="flower !== null">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <div class="spinner-border spinner-border-sm" role="status" v-if="flower === null"></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <div class="col-auto">
-            <input type="number" v-model="b" class="form-control">
-            </div>
-            <div class="col-auto">
-            <button @click="sum" class="btn btn-primary">=</button>
-            </div>
-            <div class="col-auto">
-            <span class="badge text-bg-primary fs-5"> {{ result }}</span>
+
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="h5">Калькулятор</h2>
+                    <div class="row g-3 align-items-center mt-3">
+                        <div class="col-auto">
+                            <input type="number" v-model="a" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-auto">
+                            +
+                        </div>
+                        <div class="col-auto">
+                            <input type="number" v-model="b" class="form-control form-control-sm">
+                        </div>
+                        <div class="col-auto">
+                            <button @click="sum" class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-equals"></i>
+                            </button>
+                        </div>
+                        <div class="col-auto">
+                            <span class="badge bg-secondary">{{ result }}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
+
 
     <footer>
         &copy; Фот Виктория Владимировна, ФБИ-33, 2 курс, 2025
@@ -128,4 +159,4 @@
         }).mount('#app');
     </script>
 </body>
-</html> 
+</html>
